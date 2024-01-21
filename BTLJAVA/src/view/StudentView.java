@@ -52,7 +52,7 @@ public class StudentView extends JFrame implements ActionListener, ListSelection
 
     // định nghĩa các cột của bảng student
     private String [] columnNames = new String [] {
-            "ID", "Tên", "Điểm", "Môn", "Khối"};
+            "ID", "Tên", "Phí", "Khen thưởng", "Thông tin"};
     // định nghĩa dữ liệu mặc định của bẳng student là rỗng
     private Object data = new Object [][] {};
     ;
@@ -66,8 +66,8 @@ public class StudentView extends JFrame implements ActionListener, ListSelection
         // khởi tạo các phím chức năng
         jComboBox1 = new javax.swing.JComboBox<>();
         jComboBox4 = new javax.swing.JComboBox<>();
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "","A","B","C","D" }));
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "","Toán-Lý-Hóa", "Toán-Lý-Anh", "Toán-Lý-Sinh", "Toán-Hóa-Sinh", "Văn-Sử-Địa","Văn-Toán-Anh" }));
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "","Đoàn viên","Đảng viên","Chưa kết nạp" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "","Có", "Không" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -81,11 +81,11 @@ public class StudentView extends JFrame implements ActionListener, ListSelection
 
         addStudentBtn = new JButton("Thêm");
         SearchnameStudentBtn = new JButton("Tìm tên");
-        SearchgpaStudentBtn = new JButton("Tìm điểm");
+        SearchgpaStudentBtn = new JButton("Tìm chức vụ");
         editStudentBtn = new JButton("Sửa");
         deleteStudentBtn = new JButton("Xóa");
         clearBtn = new JButton("Làm mới");
-        sortStudentGPABtn = new JButton("Xếp GPA");
+        sortStudentGPABtn = new JButton("Xếp Phí");
         sortStudentNameBtn = new JButton("Xếp Tên");
         // khởi tạo bảng student
         jScrollPaneStudentTable = new JScrollPane();
@@ -95,9 +95,9 @@ public class StudentView extends JFrame implements ActionListener, ListSelection
         // khởi tạo các label
         idLabel = new JLabel("Id");
         nameLabel = new JLabel("Tên");
-        diemLabel = new JLabel("Điểm");
-        monLabel = new JLabel("Môn");
-        khoiLabel = new JLabel("Khối");
+        diemLabel = new JLabel("Phí");
+        monLabel = new JLabel("Khen thưởng");
+        khoiLabel = new JLabel("Thông tin");
 
         // khởi tạo các trường nhập dữ liệu cho student
         idField = new JTextField(6);
@@ -345,7 +345,7 @@ public class StudentView extends JFrame implements ActionListener, ListSelection
      */
     public Student getStudentInfo() {
         // validate student
-        if (!validateName() || !validateDiem() || !validateMon() || !validateKhoi()) {
+        if (!validateName() ||  !validateMon() || !validateKhoi()) {
             return null;
         }
         try {
@@ -390,21 +390,7 @@ public class StudentView extends JFrame implements ActionListener, ListSelection
 
 
 
-    private boolean validateDiem() {
-        try {
-            Float diem = Float.parseFloat(diemField.getText().trim());
-            if (diem < 0 || diem > 10) {
-                diemField.requestFocus();
-                showMessage("điểm không hợp lệ, điểm nên trong khoảng 0 đến 10.");
-                return false;
-            }
-        } catch (Exception e) {
-            diemField.requestFocus();
-            showMessage("điểm không hợp lệ!");
-            return false;
-        }
-        return true;
-    }
+
 
     private boolean validateKhoi() {
         String khoi4 = jComboBox4.getSelectedItem().toString();
@@ -463,11 +449,11 @@ public class StudentView extends JFrame implements ActionListener, ListSelection
     }
 
 
-    public double getSearchgpaValue() {
-        String gpaString = searchgpa.getText();
-        double gpa = Double.parseDouble(gpaString);
-        return gpa;
+    public String getSearchKhoiValue() {
+        String khoi = searchgpa.getText();  // Assuming searchgpa is the component for khoi input
+        return khoi;
     }
+
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }

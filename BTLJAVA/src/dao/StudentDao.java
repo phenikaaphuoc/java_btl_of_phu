@@ -17,7 +17,7 @@ import java.util.List;
  * @author
  */
 public class StudentDao {
-    private static final String STUDENT_FILE_NAME = "src/student.xml";
+    private static final String STUDENT_FILE_NAME = "D:\\Javacode\\BTLJAVA\\src\\student.xml";
 
 
     private List<Student> listStudents;
@@ -74,15 +74,28 @@ public class StudentDao {
      * @param diem GPA cần tìm kiếm
      * @return Danh sách sinh viên thỏa mãn điều kiện tìm kiếm
      */
-    public List<Student> searchByGPA(double diem) {
-        List<Student> resultList = new ArrayList<Student>();
+//    public List<Student> searchByGPA(double diem) {
+//        List<Student> resultList = new ArrayList<Student>();
+//        for (Student student : listStudents) {
+//            if (student.getDiem() == diem) {
+//                resultList.add(student);
+//            }
+//        }
+//        return resultList;
+//    }
+    public List<Student> searchByGPA(String khoi) {
+        List<Student> resultList = new ArrayList<>();
+
         for (Student student : listStudents) {
-            if (student.getDiem() == diem) {
+            if (student.getKhoi().equals(khoi)) {
                 resultList.add(student);
             }
         }
+
         return resultList;
     }
+
+
 
 
 

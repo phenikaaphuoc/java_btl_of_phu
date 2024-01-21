@@ -2,9 +2,7 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -48,13 +46,21 @@ public class StudentController {
         }
     }
 
-    class SearchgpaStudentListener implements ActionListener{
-        public void actionPerformed(ActionEvent e) {
-            double keyword = studentView.getSearchgpaValue();
-            List<Student> searchResult = studentDao.searchByGPA(keyword);
-            studentView.showListStudents(searchResult);
-        }
+//    class SearchgpaStudentListener implements ActionListener{
+//        public void actionPerformed(ActionEvent e) {
+//            double keyword = studentView.getSearchgpaValue();
+//            List<Student> searchResult = studentDao.searchByGPA(keyword);
+//            studentView.showListStudents(searchResult);
+//        }
+//    }
+class SearchgpaStudentListener implements ActionListener {
+    public void actionPerformed(ActionEvent e) {
+        String khoi = studentView.getSearchKhoiValue();  // Assuming there's a method to get khoi from the view
+        List<Student> searchResult = studentDao.searchByGPA(khoi);
+        studentView.showListStudents(searchResult);
     }
+}
+
 
 
 
@@ -160,25 +166,24 @@ public class StudentController {
     class addthongkeBtnListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             List<Student> allStudents = studentDao.getListStudents();
-            int[] ageCount = new int[100];
-            float maxDiem = 0;
+            Map<String, Integer> khoiCount = new HashMap<>();
+
             for (Student student : allStudents) {
-                float diem = student.getDiem();
-                if (diem > maxDiem) {
-                    maxDiem = diem;
-                }
-                ageCount[(int) diem]++;
+                String khoi = student.getKhoi();  // Assuming getKhoi returns a String, adjust accordingly
+                khoiCount.put(khoi, khoiCount.getOrDefault(khoi, 0) + 1);
             }
+
             StringBuilder result = new StringBuilder();
-            result.append("Thống kê điểm sinh viên :\n");
-            for (int i = 0; i <= maxDiem; i++) {
-                if (ageCount[i] > 0) {
-                    result.append("Số học sinh  ").append(i).append(" Điểm là : ").append(ageCount[i]).append("\n");
-                }
+            result.append("Thống kê sinh viên :\n");
+
+            for (Map.Entry<String, Integer> entry : khoiCount.entrySet()) {
+                result.append("Số học sinh là ").append(entry.getKey()).append(" là : ").append(entry.getValue()).append("\n");
             }
+
             JOptionPane.showMessageDialog(studentView, result.toString());
         }
     }
+
 
 
 }
